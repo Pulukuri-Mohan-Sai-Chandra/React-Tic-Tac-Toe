@@ -6,11 +6,20 @@ import './App.css'
 import Players from './Components/Players'
 
 function App() {
-
+  const [userData, SetUserData] = useState({
+    "Player - 1": {
+      name: "",
+      type: ""
+    },
+    "Player - 2": {
+      name: "",
+      type: ""
+    }
+  })
   return (
     <>
-    <Header/>
-    <Players/>
+      <Header />
+      <Players userData={userData} SetUserData={SetUserData} />
     </>
   )
 }
