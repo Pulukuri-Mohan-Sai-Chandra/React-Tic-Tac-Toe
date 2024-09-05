@@ -1,0 +1,23 @@
+input{
+    padding: 1rem;
+    border: 2px solid #7695ff ;
+    border-radius: 2rem;
+    margin-right:0.3rem ;
+}
+button{
+    padding: 1rem;
+    border-radius: 2rem;
+    border:2px solid #7695ff;
+}
+button:hover{
+    padding: 1rem;
+    border-radius: 2rem;
+    border:none;
+    cursor: pointer;
+    background-color: #7695ff;
+    border:2px solid #7695ff;
+    color: white;
+}
+.player-wrapper{
+    text-align: center;
+}

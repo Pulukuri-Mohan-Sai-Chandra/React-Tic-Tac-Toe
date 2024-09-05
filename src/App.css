@@ -1,0 +1,16 @@
+.header {
+  width: 100vw;
+  text-align: center;
+  background-color: #16423c;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.players {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2rem 6em;
+}
