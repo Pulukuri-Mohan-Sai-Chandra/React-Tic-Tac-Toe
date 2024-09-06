@@ -19,17 +19,21 @@ function App() {
   }
   const [userData, SetUserData] = useState(intialData)
   const [gameStart, SetGameStart] = useState(false)
-  const [isGameReset, GameReset] = useState(false)
+  const [isGameReset, SetGameReset] = useState(false)
   const ResetGame = () => {
-    SetUserData(intialData)
-    GameReset(true)
+    SetUserData({...intialData})
+    SetGameReset(true)
     SetGameStart(false)
+  }
+  const StartGame = ()=>{
+    SetGameStart(true)
+    SetGameReset(false)
   }
   return (
     <>
       <Header />
-      <Players userData={userData} SetUserData={SetUserData} isGameReset={isGameReset} />
-      <Board gameStart={gameStart} SetGameStart={SetGameStart} userData={userData} ResetGame={ResetGame} isGameReset={isGameReset} />
+      <Players userData={userData} gameStart={gameStart} SetUserData={SetUserData} isGameReset={isGameReset} SetGameReset={SetGameReset} />
+      <Board gameStart={gameStart} StartGame={StartGame} userData={userData} ResetGame={ResetGame} isGameReset={isGameReset} />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import './Board.css';
-const Row = ({ row, rowindex, gameStart, SetGameStart }) => {
+const Row = ({ row, rowindex, gameStart }) => {
 
     return (
         <div className="row">
@@ -13,7 +13,7 @@ const Row = ({ row, rowindex, gameStart, SetGameStart }) => {
     )
 }
 
-const Board = ({ gameStart, SetGameStart, userData = {},ResetGame,isGameReset}) => {
+const Board = ({ gameStart, StartGame, userData = {},ResetGame,isGameReset}) => {
     const intialBoard = [["", "", ""], ["", "", ""], ["", "", ""]]
     const [board, SetBoard] = useState(intialBoard)
     const isPlayersReady = () => {
@@ -32,10 +32,10 @@ const Board = ({ gameStart, SetGameStart, userData = {},ResetGame,isGameReset}) 
             <div className="board_container">
                 {
                     board.map((row, index) => (
-                        <Row  key={`${index}`} row={row} rowindex={index} gameStart={gameStart} SetGameStart={SetGameStart} />
+                        <Row  key={`${index}`} row={row} rowindex={index} gameStart={gameStart}/>
                     ))
                 }
-                <button disabled={!isPlayersReady()} className="game_button" onClick={() => { SetGameStart(true) }} >Start Game</button>
+                <button disabled={!isPlayersReady()} className="game_button" onClick={() => { StartGame() }} >Start Game</button>
                 <button onClick={()=>{ResetGame()}}>Reset</button>
             </div>
         </div>
