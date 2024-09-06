@@ -30,7 +30,7 @@ const Player = ({ gameReset, input_text, userData, SetUserData }) => {
     return (
         <h2>
             <input disabled={(gameReset) ? false : isConfirm} type="text" name="name" id="" value={name} onChange={(e) => { SetName(e.target.value) }} placeholder={input_text} />
-            <select onChange={(e) => SetUserData({...userData,input_text:{name:userData[input_text].name,type:e.target.value}})}>
+            <select disabled={(gameReset)?false:isConfirm} onChange={(e) => SetUserData({...userData,input_text:{name:userData[input_text].name,type:e.target.value}})}>
                 {
                     options.map((option,index)=>(
                         <option disabled={isValid(option)} key={index} value={option.value}>{option.name}</option>

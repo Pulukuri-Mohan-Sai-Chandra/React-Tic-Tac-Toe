@@ -1,23 +1,34 @@
-input{
+input {
     padding: 1rem;
-    border: 2px solid #7695ff ;
+    border: 2px solid #7695ff;
     border-radius: 2rem;
-    margin-right:0.3rem ;
+    margin-right: 0.3rem;
 }
-button{
+
+button {
     padding: 1rem;
     border-radius: 2rem;
-    border:2px solid #7695ff;
+    border: 2px solid #7695ff;
 }
-button:hover{
+
+button:hover {
     padding: 1rem;
     border-radius: 2rem;
-    border:none;
+    border: none;
     cursor: pointer;
     background-color: #7695ff;
-    border:2px solid #7695ff;
+    border: 2px solid #7695ff;
     color: white;
 }
-.player-wrapper{
+
+select {
+    background-color: white;
+    padding: 1rem;
+    margin-right: 0.3rem;
+    border: 2px solid #7695ff;
+    border-radius: 2rem;
+}
+
+.player-wrapper {
     text-align: center;
 }
