@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import './Players.css'
 
-const Player = ({ gameReset, input_text, userData, SetUserData }) => {
+const Player = ({ isGameReset, input_text, userData, SetUserData }) => {
 
     const [name, SetName] = useState("")
     const [isConfirm, SetConfirm] = useState(false)
-    const options = [{
+    const initialOptions = [{
         name: "Choose your option",
         value: ""
     }, {
@@ -15,11 +15,21 @@ const Player = ({ gameReset, input_text, userData, SetUserData }) => {
         name: "O",
         value: "O"
     }]
-    const isValid = (option)=>{
-        if(userData){
-            for(const userObj of Object.values(userData)){
-                if(userObj.type != ""){
-                    if(userObj.type === option.value){
+    useEffect(() => {
+        SetName("")
+        SetConfirm(false)
+    }, [isGameReset])
+
+    // useEffect(() => {
+    //     SetName("")
+    // }, [isGameReset])
+
+    const [options, SetOptions] = useState(initialOptions)
+    const isValid = (option) => {
+        if (userData) {
+            for (const userObj of Object.values(userData)) {
+                if (userObj.type != "") {
+                    if (userObj.type === option.value) {
                         return true;
                     }
                 }
@@ -29,25 +39,34 @@ const Player = ({ gameReset, input_text, userData, SetUserData }) => {
     }
     return (
         <h2>
-            <input disabled={(gameReset) ? false : isConfirm} type="text" name="name" id="" value={name} onChange={(e) => { SetName(e.target.value) }} placeholder={input_text} />
-            <select disabled={(gameReset)?false:isConfirm} onChange={(e) => SetUserData({...userData,input_text:{name:userData[input_text].name,type:e.target.value}})}>
+            <input disabled={(isGameReset) ? false : isConfirm} type="text" name="name" id="" value={name} onChange={(e) => { SetName(e.target.value) }} placeholder={input_text} />
+            <select disabled={(isGameReset) ? false : isConfirm} onChange={(e) => SetUserData({ ...userData, [input_text]: { name: userData[input_text].name, type: e.target.value } })} value={userData[input_text].type}>
                 {
-                    options.map((option,index)=>(
+                    options.map((option, index) => (
                         <option disabled={isValid(option)} key={index} value={option.value}>{option.name}</option>
                     ))
                 }
             </select>
-            <button onClick={() => { SetConfirm(true) }}>Ok</button>
+            <button disabled={(isGameReset) ? false : isConfirm} onClick={() => {
+                SetConfirm(true)
+                SetUserData({
+                    ...userData, [input_text]: {
+                        name: name,
+                        type: userData[input_text].type
+                    }
+                })
+            }}>Ok</button>
 
         </h2>
     )
 }
 
-const Players = ({ gameReset, userData, SetUserData }) => {
+const Players = ({ isGameReset, userData, SetUserData }) => {
+
     return (
         <div className="players">
-            <Player input_text="Player - 1" gameReset={gameReset} userData={userData} SetUserData={SetUserData} />
-            <Player input_text="Player - 2" gameReset={gameReset} userData={userData} SetUserData={SetUserData} />
+            <Player input_text="Player - 1" userData={userData} SetUserData={SetUserData} isGameReset={isGameReset} />
+            <Player input_text="Player - 2" userData={userData} SetUserData={SetUserData} isGameReset={isGameReset} />
         </div>
     )
 }
