@@ -13,14 +13,13 @@ const Row = ({ row, rowindex, gameStart }) => {
     )
 }
 
-const Board = ({ gameStart, StartGame, userData = {},ResetGame,isGameReset}) => {
+const Board = (props) => {
+    const { gameStart, StartGame, playersDetails = {},ResetGame,isGameReset} = props
     const intialBoard = [["", "", ""], ["", "", ""], ["", "", ""]]
     const [board, SetBoard] = useState(intialBoard)
     const isPlayersReady = () => {
-        if (userData) {
-            for (const obj of Object.values(userData)) {
-                if(obj.name == "" || obj.type == "") return false;
-            }
+        for(const obj of Object.values(playersDetails)){
+            if(obj.name === '' || obj.type === '') return false;
         }
         return true;
     }
@@ -35,8 +34,23 @@ const Board = ({ gameStart, StartGame, userData = {},ResetGame,isGameReset}) => 
                         <Row  key={`${index}`} row={row} rowindex={index} gameStart={gameStart}/>
                     ))
                 }
-                <button disabled={!isPlayersReady()} className="game_button" onClick={() => { StartGame() }} >Start Game</button>
+                {
+                    (!gameStart)?<button disabled={!isPlayersReady()} className="game_button" onClick={() => { StartGame() }} >Start Game</button>:<></>
+                }
                 <button onClick={()=>{ResetGame()}}>Reset</button>
+                {/* {
+                    (gameStart)?<button onClick={()=>{ResetGame()}}>Reset</button>:<button disabled={!isPlayersReady()} className="game_button" onClick={() => { StartGame() }} >Start Game</button>
+                } */}
+                {/* {
+                    (isGameReset)?
+                    <button disabled={!isPlayersReady()} className="game_button" onClick={() => { StartGame() }} >Start Game</button>
+                    :<></>
+                }
+                
+                {
+                    (gameStart)?<button onClick={()=>{ResetGame()}}>Reset</button>:<></>
+                } */}
+
             </div>
         </div>
     )
