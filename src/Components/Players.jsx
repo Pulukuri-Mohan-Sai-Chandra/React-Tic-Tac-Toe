@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import './Players.css'
 
 const Player = (props) => {
-    const { input_text, playersData, SetPlayersData, SetGameReset,isGameReset} = props;
+    const { input_text, playersData, SetPlayersData, SetGameReset, isGameReset, currPlayer, gameStart} = props;
     const initialOptions = [{
         name: "Choose your option",
         value: ""
@@ -13,12 +13,12 @@ const Player = (props) => {
         name: "O",
         value: "O"
     }]
-    useEffect(()=>{
-        if(isGameReset){
+    useEffect(() => {
+        if (isGameReset) {
             SetConfirm(false)
         }
-    },[isGameReset])
-    const[isConfirm, SetConfirm] = useState(false);
+    }, [isGameReset])
+    const [isConfirm, SetConfirm] = useState(false);
     const [options, SetOptions] = useState(initialOptions)
     const isValid = (option) => {
         if (playersData) {
@@ -32,69 +32,80 @@ const Player = (props) => {
         }
         return false;
     }
-    const handleChange = (e)=>{
+    const handleChange = (e) => {
         switch (e.target.name) {
             case 'name':
                 SetPlayersData({
-                    ...playersData,[input_text]:{
-                        name:e.target.value,
-                        type:playersData[input_text].type
+                    ...playersData, [input_text]: {
+                        name: e.target.value,
+                        type: playersData[input_text].type
                     }
                 })
                 break;
             case 'type':
                 SetPlayersData({
                     ...playersData,
-                    [input_text]:{
-                        name:playersData[input_text].name,
-                        type:e.target.value
+                    [input_text]: {
+                        name: playersData[input_text].name,
+                        type: e.target.value
                     }
                 })
                 break;
         }
     }
+    const getComputedStyles = () => {
+        if (gameStart) {
+            if (input_text === currPlayer) {
+                return { border: '2px solid #16423c' }
+            }
+        }
+
+        return {}
+    }
     return (
-        <h2>
-            <input 
-            disabled={isConfirm} 
-            type="text" name="name" 
-            id="" 
-            value={playersData[input_text].name} 
-            onChange={(e) => {
-                handleChange(e)
-                SetGameReset(false)
-            }} placeholder={input_text} />
-            <select 
-            name="type"
-            disabled={isConfirm} 
-            onChange={(e) =>
-            {
-                handleChange(e)
-                SetGameReset(false);
-            }} value={playersData[input_text].type}>
+        <h2 style={getComputedStyles()}>
+            <input
+                disabled={isConfirm}
+                type="text" name="name"
+                id=""
+                value={playersData[input_text].name}
+                onChange={(e) => {
+                    handleChange(e)
+                    SetGameReset(false)
+                }} placeholder={input_text} />
+            <select
+                name="type"
+                disabled={isConfirm}
+                onChange={(e) => {
+                    handleChange(e)
+                    SetGameReset(false);
+                }} value={playersData[input_text].type}>
                 {
                     options.map((option, index) => (
-                        <option 
-                        disabled={isValid(option)} 
-                        key={index} 
-                        value={option.value}
+                        <option
+                            disabled={isValid(option)}
+                            key={index}
+                            value={option.value}
                         >
-                        {option.name}
+                            {option.name}
                         </option>
                     ))
                 }
             </select>
-            <button 
-            disabled={isConfirm} 
-            onClick={() => {
-                SetConfirm(true)
-            }}>Ok</button>
+            <button
+                disabled={isConfirm}
+                onClick={() => {
+                    SetConfirm(true)
+                }}>Ok</button>
 
         </h2>
     )
 }
 
-const Players = ({ isGameReset, SetGameReset, gameStart ,SetPlayersDetails}) => {
+const Players = (props) => {
+
+    const { isGameReset, SetGameReset, gameStart, SetPlayersDetails,currPlayer} = props
+
     const intialData = {
         "Player - 1": {
             name: "",
@@ -111,26 +122,28 @@ const Players = ({ isGameReset, SetGameReset, gameStart ,SetPlayersDetails}) => 
             SetPlayersData(intialData)
         }
     }, [isGameReset])
-    useEffect(()=>{
+    useEffect(() => {
         SetPlayersDetails(playersData)
-    },[playersData])
+    }, [playersData])
     return (
         <div className="players">
-            <Player 
-            input_text="Player - 1" 
-            playersData={playersData} 
-            SetPlayersData={SetPlayersData} 
-            SetGameReset={SetGameReset} 
-            gameStart={gameStart} 
-            isGameReset={isGameReset}
+            <Player
+                input_text="Player - 1"
+                playersData={playersData}
+                SetPlayersData={SetPlayersData}
+                SetGameReset={SetGameReset}
+                gameStart={gameStart}
+                isGameReset={isGameReset}
+                currPlayer={currPlayer}
             />
-            <Player 
-            input_text="Player - 2" 
-            playersData={playersData} 
-            SetPlayersData={SetPlayersData} 
-            SetGameReset={SetGameReset} 
-            gameStart={gameStart} 
-            isGameReset={isGameReset}
+            <Player
+                input_text="Player - 2"
+                playersData={playersData}
+                SetPlayersData={SetPlayersData}
+                SetGameReset={SetGameReset}
+                gameStart={gameStart}
+                isGameReset={isGameReset}
+                currPlayer={currPlayer}
             />
         </div>
     )
