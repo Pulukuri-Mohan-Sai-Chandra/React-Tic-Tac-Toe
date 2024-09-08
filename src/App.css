@@ -15,3 +15,12 @@
   padding: 2rem 6em;
   background-color: #BEDC74;
 }
+.results{
+  width: 100vw;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: xx-large;
+  background: -webkit-linear-gradient(#D3D04F, #8EAC50,#17594A,#213363);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

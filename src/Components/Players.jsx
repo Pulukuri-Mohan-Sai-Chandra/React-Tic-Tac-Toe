@@ -56,7 +56,9 @@ const Player = (props) => {
     const getComputedStyles = () => {
         if (gameStart) {
             if (input_text === currPlayer) {
-                return { border: '2px solid #16423c' }
+                return { border: '2px solid #16423c',
+                    padding:"1rem"
+                 }
             }
         }
 

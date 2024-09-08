@@ -6,6 +6,7 @@ import './App.css'
 import Players from './Components/Players'
 import Board from './Components/Board'
 import ErrorBoundary from './Components/ErrorBoundary'
+import crownImage from '../public/crown.png'
 
 function App() {
   const [gameStart, SetGameStart] = useState(false)
@@ -47,9 +48,11 @@ function App() {
           SetCurrPlayer={SetCurrPlayer}
           SetWinner={SetWinner}
         />
-        {
-          (winner != "") ? <h1>{winner}</h1> : <></>
-        }
+        <div className="results">
+          {
+            (winner != "") ? <h1>Winner 👑: {winner}</h1> : <></>
+          }
+        </div>
       </ErrorBoundary>
     </>
   )
