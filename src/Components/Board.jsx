@@ -12,17 +12,18 @@ const Row = (props) => {
         let currRow = Number.parseInt(e.target.attributes.row.nodeValue);
         let currCol = Number.parseInt(e.target.attributes.col.nodeValue);
         if (gameStart) {
+            console.log("Game Start is is True but got inside of the value change....", gameStart)
             if (Object.values(playersDetails).length > 0) {
                 for (let rindex = 0; rindex < tmpBoard.length; rindex++) {
                     for (let cindex = 0; cindex < tmpBoard[rindex].length; cindex++) {
                         if (rindex == currRow && cindex == currCol) {
-                            if (tmpBoard[rindex][cindex] == "") {
-                                if (currPlayer == "Player - 1") {
+                            if (tmpBoard[rindex][cindex] === "") {
+                                if (gameStart && currPlayer == "Player - 1") {
                                     tmpBoard[rindex][cindex] = playersDetails[currPlayer].type;
                                     SetCurrSize(currSize + 1);
                                     SetCurrPlayer("Player - 2")
                                 }
-                                else {
+                                else if (gameStart) {
                                     tmpBoard[rindex][cindex] = playersDetails[currPlayer].type;
                                     SetCurrSize(currSize + 1)
                                     SetCurrPlayer("Player - 1")
@@ -40,7 +41,11 @@ const Row = (props) => {
         <div className="row">
             {
                 row.map((col, colindex) => (
-                    <input readOnly onClick={handleClick} key={`${rowindex}-${colindex}`} disabled={!gameStart || gamePause} className="cell" row={rowindex} col={colindex} value={col} />
+                    <input readOnly onClick={(e) => {
+                        if (gameStart) {
+                            handleClick(e)
+                        }
+                    }} key={`${rowindex}-${colindex}`} disabled={!gameStart || gamePause} className="cell" row={rowindex} col={colindex} value={col} />
                 ))
             }
         </div>
@@ -86,36 +91,36 @@ const Board = (props) => {
 
     const isWinner = (playerType) => {
         //first row 
-        if(board[0][0] === playerType){
-            if(board[0][0] === board[0][1] && board[0][1] === board[0][2] && board[0][2] === board[0][0]) return true;
+        if (board[0][0] === playerType) {
+            if (board[0][0] === board[0][1] && board[0][1] === board[0][2] && board[0][2] === board[0][0]) return true;
         }
         // second row 
-        if(board[1][0] === playerType){
-            if(board[1][0] === board[1][1] && board[1][1] === board[1][2] === board[1][2] === board[1][0]) return true; 
+        if (board[1][0] === playerType) {
+            if (board[1][0] === board[1][1] && board[1][1] === board[1][2] === board[1][2] === board[1][0]) return true;
         }
         // third row 
-        if(board[2][0] === playerType){
-            if(board[2][0] === board[2][1] && board[2][1] == board[2][2] && board[2][2] === board[2][0]) return true; 
+        if (board[2][0] === playerType) {
+            if (board[2][0] === board[2][1] && board[2][1] == board[2][2] && board[2][2] === board[2][0]) return true;
         }
         // first col 
-        if(board[0][0] === playerType){
-            if(board[0][0] === board[1][0] && board[1][0] === board[2][0] && board[2][0] === board[0][0]) return true;
+        if (board[0][0] === playerType) {
+            if (board[0][0] === board[1][0] && board[1][0] === board[2][0] && board[2][0] === board[0][0]) return true;
         }
         // second col 
-        if(board[0][1] === playerType){
-            if(board[0][1] === board[1][1] && board[1][1] === board[2][1] && board[2][1] === board[0][1]) return true;
+        if (board[0][1] === playerType) {
+            if (board[0][1] === board[1][1] && board[1][1] === board[2][1] && board[2][1] === board[0][1]) return true;
         }
         // third col 
-        if(board[0][2] === playerType){
-            if(board[0][2] === board[1][2] && board[1][2] === board[2][2] && board[2][2] === board[0][2]) return true;
+        if (board[0][2] === playerType) {
+            if (board[0][2] === board[1][2] && board[1][2] === board[2][2] && board[2][2] === board[0][2]) return true;
         }
         // left diagnol
-        if(board[0][0] === playerType){
-            if(board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[2][2] == board[0][0]) return true;
+        if (board[0][0] === playerType) {
+            if (board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[2][2] == board[0][0]) return true;
         }
         // right diagnol
-        if(board[0][2] === playerType){
-            if(board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[2][0] === board[0][2]) return true;
+        if (board[0][2] === playerType) {
+            if (board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[2][0] === board[0][2]) return true;
         }
         return false;
     }
@@ -123,13 +128,13 @@ const Board = (props) => {
     useEffect(() => {
         const xPlayer = isWinner("X")
         const oPlayer = isWinner("O")
-        console.log("xplayer", xPlayer) 
+        console.log("xplayer", xPlayer)
         console.log('oplayer', oPlayer)
         if (xPlayer && oPlayer) {
             SetWinner("Tie")
             SetGamePause(true)
         }
-        else if(currSize === 9 && xPlayer === false && oPlayer === false){
+        else if (currSize === 9 && xPlayer === false && oPlayer === false) {
             SetWinner("Tie")
             SetGamePause(true)
         }
